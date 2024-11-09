@@ -6,13 +6,19 @@ if(!isset($_SESSION['melogin'])) { header('location:index.php');}
 
     if($_FILES){
   
-            function renamefile($filename) {
-                $find = array('Ç', 'Ş', 'Ğ', 'Ü', 'İ', 'Ö', 'ç', 'ş', 'ğ', 'ü', 'ö', 'ı', ' ');
-                $replace = array('c', 's', 'g', 'u', 'i', 'o', 'c', 's', 'g', 'u', 'o', 'i', '-');
-                $filename = strtolower(str_replace($find, $replace, $filename)); 
-                
+            
+            function renameFile($filename)
+            {
+                $charMap = [
+                    'Ç' => 'c', 'Ş' => 's', 'Ğ' => 'g', 'Ü' => 'u', 'İ' => 'i', 'Ö' => 'o',
+                    'ç' => 'c', 'ş' => 's', 'ğ' => 'g', 'ü' => 'u', 'ö' => 'o', 'ı' => 'i',
+                    ' ' => '-'
+                ];
+                $filename = strtolower(str_replace(array_keys($charMap), array_values($charMap), $filename));
+
                 return $filename;
             }
+
       
         $uploadfolder = 'u';
         $file = $_FILES['file']; 
